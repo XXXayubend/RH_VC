@@ -45,8 +45,8 @@ public class CandidatServiceImpl implements CandidatService {
     public List<CandidatDto> getAllCAndidats() {
         log.debug("Récupération de tous les candidats");
         return candidatRepository.findAll().
-                stream().
-                map(CandidatMapper::mapToCandidatDto)
+                stream()
+                .map(CandidatMapper::mapToCandidatDto)
                 .collect(Collectors.toList());
     }
 

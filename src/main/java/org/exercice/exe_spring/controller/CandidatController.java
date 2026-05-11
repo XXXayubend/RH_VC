@@ -1,6 +1,7 @@
 package org.exercice.exe_spring.controller;
 
 
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.exercice.exe_spring.dto.CandidatDto;
@@ -25,7 +26,7 @@ public class CandidatController {
 
     //créer add candidat REST API
     @PostMapping
-    public ResponseEntity<CandidatDto> createCandidat(@RequestBody CandidatDto candidatDto){
+    public ResponseEntity<CandidatDto> createCandidat(@Valid @RequestBody CandidatDto candidatDto){
         log.info("Requette POST /api/candidats - body: {}", candidatDto);
         CandidatDto savedCandidat = candidatService.createCandidat(candidatDto);
         log.info("Candidat crée avec success,id {}", savedCandidat.getId());
