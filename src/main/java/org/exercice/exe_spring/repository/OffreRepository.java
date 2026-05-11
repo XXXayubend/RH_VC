@@ -1,4 +1,7 @@
 package org.exercice.exe_spring.repository;
 
-public interface OffreRepository {
+import org.exercice.exe_spring.entity.Offre;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface OffreRepository extends JpaRepository<Offre, Long> {
 }

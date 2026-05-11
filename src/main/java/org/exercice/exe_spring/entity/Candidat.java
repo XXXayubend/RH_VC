@@ -1,18 +1,24 @@
 package org.exercice.exe_spring.entity;
 
 import jakarta.persistence.*;
-import lombok.Data;
+import lombok.*;
 
+
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "candidat")
-@Data
-public class Candidature {
+public class Candidat {
+
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(name = "nom_complet")
-    private String name;
+    private String nom;
 
     @Column(name = "email_id", nullable = false, unique = true)
     private String email;
