@@ -61,19 +61,18 @@ public class OffreControllerTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(duplicate)))
                 .andExpect(status().isConflict())
-                .andExpect(status().isConflict())
-                .andExpect(content().string(containsString("exist deja")));
+                .andExpect(content().string(containsString("Une offre avec ce titre existe deja")));
     }
 
     @Test
     void testCreateOffre_ValidationError() throws Exception {
-        OffreDto invalid = new OffreDto(null, "Manager Senior","");
+        OffreDto invalid = new OffreDto(null, "","");
         mockMvc.perform(post("/api/offres")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(invalid)))
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("$.titre").exists())
-                .andExpect(jsonPath("$.copetancesRequises").exists());
+                .andExpect(jsonPath("$.competancesRequises").exists());
     }
 
     @Test

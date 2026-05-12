@@ -2,6 +2,7 @@ package org.exercice.exe_spring.dto;
 
 
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -14,9 +15,11 @@ import lombok.Setter;
 public class OffreDto {
     private Long id;
 
-    @NotBlank(message = "Le titre est obligatoire")
+    @NotNull(message = "Le titre est obligatoire")
+    @NotBlank(message = "Le titre ne peut pas etre vide")
     private String titre;
 
-    @NotBlank(message = "Les compétances requires sont obligatoires")
+    @NotNull(message = "Les compétances sont obligatoires")
+    @NotBlank(message = "Les compétances ne peut pas etre vide")
     private String competancesRequises;
 }
