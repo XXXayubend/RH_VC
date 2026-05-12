@@ -36,7 +36,6 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errors);
     }
 
-    // Gestion des ressources statiques manquantes (favicon.ico, .well-known, etc.)
     @ExceptionHandler(NoResourceFoundException.class)
     public ResponseEntity<Void> handleNoResourceFound(NoResourceFoundException ex) {
         log.debug("Ressource statique non trouvée : {}", ex.getResourcePath());
@@ -45,11 +44,17 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<String> handleGeneric(Exception ex) {
-        // Déjà traité par le handler spécifique
+
         if (ex instanceof NoResourceFoundException) {
             return ResponseEntity.notFound().build();
         }
         log.error("Erreur interne", ex);
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Erreur technique");
+    }
+
+    @ExceptionHandler(DuplicateTitreException.class)
+    public ResponseEntity<String> handleDuplicateTitre(DuplicateTitreException ex) {
+        log.error("Error de duplication de titre: {}", ex.getMessage());
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(ex.getMessage());
     }
 }

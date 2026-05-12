@@ -2,24 +2,25 @@ package org.exercice.exe_spring;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.transaction.Transactional;
-import org.exercice.exe_spring.dto.CandidatDto;
-import org.exercice.exe_spring.repository.CandidatRepository;
+import org.exercice.exe_spring.dto.OffreDto;
+import org.exercice.exe_spring.repository.OffreRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
-import org.springframework.test.web.servlet.MockMvc;
 import static org.hamcrest.Matchers.containsString;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
+
 @SpringBootTest
 @AutoConfigureMockMvc
 @Transactional
-public class CandidatControllerTest {
+public class OffreControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
@@ -27,57 +28,57 @@ public class CandidatControllerTest {
     @Autowired
     private ObjectMapper objectMapper;
     @Autowired
-    private CandidatRepository candidatRepository;
+    private OffreRepository offreRepository;
 
     @BeforeEach
     void clean() {
-        candidatRepository.deleteAll();
+        offreRepository.deleteAll();
     }
 
+
     @Test
-    void testCreateCandidat_Success() throws Exception {
-        CandidatDto dto = new CandidatDto(null, "wafa", "wafa@email.com", "Java,Spring", 3);
-        mockMvc.perform(post("/api/candidats")
+    void testCreateOffre_Syccess() throws Exception {
+        OffreDto dto = new OffreDto(null, "BackEnd developper", "python3");
+        mockMvc.perform(post("/api/offres")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(dto)))
                 .andExpect(status().isCreated())
-                .andExpect(jsonPath("$.email").value("wafa@email.com"))
-                .andExpect(jsonPath("$.nom").value("wafa"));
+                .andExpect(jsonPath("$.titre").value("BackEnd developper"));
     }
 
     @Test
-    void testCreateCandidat_DuplicateEmail() throws Exception {
-        // Premier candidat
-        CandidatDto dto = new CandidatDto(null, "wisem", "wisem@email.com", "C++", 9);
-        mockMvc.perform(post("/api/candidats")
+    void testCreateOffre_DuplicateTitre() throws Exception {
+        // Premier offre
+        OffreDto dto = new OffreDto(null, "data engineer", "Python");
+        mockMvc.perform(post("/api/offres")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(dto)))
                 .andExpect(status().isCreated());
 
-        // Second avec meme email
-        CandidatDto duplicate = new CandidatDto(null, "wasim", "wisem@email.com", "Python", 6);
-        mockMvc.perform(post("/api/candidats")
+        // Second oddre
+        OffreDto duplicate = new OffreDto(null, "data engineer", "Python");
+        mockMvc.perform(post("/api/offres")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(duplicate)))
                 .andExpect(status().isConflict())
-                .andExpect(content().string(containsString("existe deja")));
+                .andExpect(status().isConflict())
+                .andExpect(content().string(containsString("exist deja")));
     }
 
     @Test
-    void testCreateCandidat_ValidationError() throws Exception {
-        CandidatDto invalid = new CandidatDto(null, "", "badEmail", "Java", -5);
-        mockMvc.perform(post("/api/candidats")
+    void testCreateOffre_ValidationError() throws Exception {
+        OffreDto invalid = new OffreDto(null, "Manager Senior","");
+        mockMvc.perform(post("/api/offres")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(invalid)))
                 .andExpect(status().isBadRequest())
-                .andExpect(jsonPath("$.nom").exists())
-                .andExpect(jsonPath("$.email").exists())
-                .andExpect(jsonPath("$.anneesExperience").exists());
+                .andExpect(jsonPath("$.titre").exists())
+                .andExpect(jsonPath("$.copetancesRequises").exists());
     }
 
     @Test
-    void testGetAllCandidats() throws Exception {
-        mockMvc.perform(get("/api/candidats"))
+    void testGetAllOffres() throws Exception {
+        mockMvc.perform(get("/api/offres"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON));
     }
