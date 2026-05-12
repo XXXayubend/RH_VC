@@ -34,7 +34,7 @@ L'application suit une architecture classique en couches :
 
 - JDK 17 ou supérieur
 - Maven 3.6+
-- Un IDE (IntelliJ, Eclipse, VS Code) ou un terminal
+- Un IDE (IntelliJ, VS Code) ou un terminal
 
 ## Installation et exécution
 
