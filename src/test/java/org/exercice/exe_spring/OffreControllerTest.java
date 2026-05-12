@@ -37,7 +37,7 @@ public class OffreControllerTest {
 
 
     @Test
-    void testCreateOffre_Syccess() throws Exception {
+    void testCreateOffre_Success() throws Exception {
         OffreDto dto = new OffreDto(null, "BackEnd developper", "python3");
         mockMvc.perform(post("/api/offres")
                         .contentType(MediaType.APPLICATION_JSON)

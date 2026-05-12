@@ -25,7 +25,7 @@ L'application suit une architecture classique en couches :
 - Java 17+
 - Spring Boot 3.x
 - Spring Data JPA (Hibernate)
-- Base de données H2 (ou MySQL/PostgreSQL selon configuration)
+- Base de données H2 (ou MySQL)
 - Lombok (réduction du code boilerplate)
 - Jakarta Validation (validation des DTO)
 - Maven (gestion des dépendances)
