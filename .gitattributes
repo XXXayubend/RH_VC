@@ -1,2 +1,21 @@
 /mvnw text eol=lf
 *.cmd text eol=crlf
+
+
+# Auto detect text files and perform LF normalization
+* text=auto
+
+# Java files (LF for all platforms)
+*.java text eol=lf
+*.properties text eol=lf
+*.xml text eol=lf
+
+# Docker files
+Dockerfile text eol=lf
+docker-compose.yml text eol=lf
+
+# Shell scripts (must be LF)
+*.sh text eol=lf
+
+# Batch files (must be CRLF)
+*.bat text eol=crlf
