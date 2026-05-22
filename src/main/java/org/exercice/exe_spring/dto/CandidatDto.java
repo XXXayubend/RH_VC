@@ -9,6 +9,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -25,8 +26,22 @@ public class CandidatDto {
     private String email;
 
 
-    private String competances;
+    private String competences;
 
     @PositiveOrZero(message = "L'experience doit étre etre positive ou nulle")
     private Integer anneesExperience;
+
+    private String CvFileName;
+
+    private String cvPath;
+    private String cvMimeType;
+    private LocalDateTime createdAt;
+
+    public CandidatDto(Long id, String nom, String email, String competences, Integer anneesExperience) {
+        this.id = id;
+        this.nom = nom;
+        this.email = email;
+        this.competences = competences;
+        this.anneesExperience = anneesExperience;
+    }
 }

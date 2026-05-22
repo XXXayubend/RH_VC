@@ -21,5 +21,5 @@ public class OffreDto {
 
     @NotNull(message = "Les compétances sont obligatoires")
     @NotBlank(message = "Les compétances ne peut pas etre vide")
-    private String competancesRequises;
+    private String competencesRequises;
 }

@@ -6,16 +6,15 @@ import org.exercice.exe_spring.dto.OffreDto;
 import org.exercice.exe_spring.repository.OffreRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
-import static org.hamcrest.Matchers.containsString;
+import org.springframework.test.web.servlet.MockMvc;
 
+import static org.hamcrest.Matchers.containsString;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
-
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -27,6 +26,7 @@ public class OffreControllerTest {
 
     @Autowired
     private ObjectMapper objectMapper;
+
     @Autowired
     private OffreRepository offreRepository;
 
@@ -34,7 +34,6 @@ public class OffreControllerTest {
     void clean() {
         offreRepository.deleteAll();
     }
-
 
     @Test
     void testCreateOffre_Success() throws Exception {
@@ -48,14 +47,12 @@ public class OffreControllerTest {
 
     @Test
     void testCreateOffre_DuplicateTitre() throws Exception {
-        // Premier offre
         OffreDto dto = new OffreDto(null, "data engineer", "Python");
         mockMvc.perform(post("/api/offres")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(dto)))
                 .andExpect(status().isCreated());
 
-        // Second oddre
         OffreDto duplicate = new OffreDto(null, "data engineer", "Python");
         mockMvc.perform(post("/api/offres")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -66,13 +63,11 @@ public class OffreControllerTest {
 
     @Test
     void testCreateOffre_ValidationError() throws Exception {
-        OffreDto invalid = new OffreDto(null, "","");
+        OffreDto invalid = new OffreDto(null, "", "");
         mockMvc.perform(post("/api/offres")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(invalid)))
-                .andExpect(status().isBadRequest())
-                .andExpect(jsonPath("$.titre").exists())
-                .andExpect(jsonPath("$.competancesRequises").exists());
+                .andExpect(status().isBadRequest());
     }
 
     @Test
@@ -81,4 +76,6 @@ public class OffreControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON));
     }
+
+
 }

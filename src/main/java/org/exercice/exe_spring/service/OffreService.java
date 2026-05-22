@@ -9,4 +9,6 @@ public interface OffreService {
 
     OffreDto createOffre(OffreDto offreDto);
     List<OffreDto> getAllOffres();
+
+    OffreDto getOffreById(Long id);
 }

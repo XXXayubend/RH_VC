@@ -21,5 +21,5 @@ public class Offre {
     private String titre;
 
     @Column(name = "required_competence")
-    private String Competence;
+    private String competence;
 }

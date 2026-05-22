@@ -5,22 +5,27 @@ import org.exercice.exe_spring.entity.Offre;
 
 public class OffreMapper {
 
-
     // Entity to Dto
-    public static OffreDto mapToOffreDto(Offre offre){
-        return new OffreDto(
-                offre.getId(),
-                offre.getTitre(),
-                offre.getCompetence()
-        );
+    public static OffreDto mapToOffreDto(Offre offre) {
+        if (offre == null) {
+            return null;
+        }
+        OffreDto dto = new OffreDto();
+        dto.setId(offre.getId());
+        dto.setTitre(offre.getTitre());
+        dto.setCompetencesRequises(offre.getCompetence());
+        return dto;
     }
 
     // Dto to Entity
-    public static Offre mapToOffre(OffreDto offreDto){
-        return new Offre(
-                offreDto.getId(),
-                offreDto.getTitre(),
-                offreDto.getCompetancesRequises()
-        );
+    public static Offre mapToOffre(OffreDto offreDto) {
+        if (offreDto == null) {
+            return null;
+        }
+        Offre offre = new Offre();
+        offre.setId(offreDto.getId());
+        offre.setTitre(offreDto.getTitre());
+        offre.setCompetence(offreDto.getCompetencesRequises());
+        return offre;
     }
 }

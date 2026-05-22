@@ -4,12 +4,11 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.exercice.exe_spring.dto.OffreDto;
 import org.exercice.exe_spring.entity.Offre;
-import org.exercice.exe_spring.exception.DuplicateEmailException;
 import org.exercice.exe_spring.exception.DuplicateTitreException;
+import org.exercice.exe_spring.exception.ResourceNotFoundException;
 import org.exercice.exe_spring.mapper.OffreMapper;
 import org.exercice.exe_spring.repository.OffreRepository;
 import org.exercice.exe_spring.service.OffreService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -20,7 +19,6 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 public class OffreServiceImpl implements OffreService {
 
-    @Autowired
     private final OffreRepository offreRepository;
 
     @Override
@@ -34,7 +32,7 @@ public class OffreServiceImpl implements OffreService {
 
         Offre offre = OffreMapper.mapToOffre(offreDto);
         Offre savedOffre = offreRepository.save(offre);
-        log.info("Offre sauvegarder evec id {}", savedOffre.getId());
+        log.info("Offre sauvegarder avec id {}", savedOffre.getId());
         return OffreMapper.mapToOffreDto(savedOffre);
     }
 
@@ -44,5 +42,12 @@ public class OffreServiceImpl implements OffreService {
                 .stream()
                 .map(OffreMapper::mapToOffreDto)
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public OffreDto getOffreById(Long id) {
+        Offre offre = offreRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Offre non trouvée avec l'id: " + id));
+        return OffreMapper.mapToOffreDto(offre);
     }
 }

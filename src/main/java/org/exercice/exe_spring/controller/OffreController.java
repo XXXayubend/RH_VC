@@ -14,7 +14,7 @@ import java.util.List;
 
 @Slf4j
 @AllArgsConstructor
-@CrossOrigin
+//@CrossOrigin
 @RestController
 @RequestMapping("/api/offres")
 public class OffreController {
