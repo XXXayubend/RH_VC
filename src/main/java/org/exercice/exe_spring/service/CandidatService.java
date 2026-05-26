@@ -12,8 +12,8 @@ public interface CandidatService {
     CandidatDto createCandidatWithCV(CandidatDto candidatDto, MultipartFile file) throws Exception;
     CandidatDto getCandidatById(Long id);
     byte[] downloadCV(Long id) throws IOException;
-    CandidatDto updateCandidatWithCV(Long id, CandidatDto candidatDto, MultipartFile file) throws IOException;
-    void deleteCandidat(Long id);
+    // CandidatDto updateCandidatWithCV(Long id, CandidatDto candidatDto, MultipartFile file) throws IOException;
+    // void deleteCandidat(Long id);
 
 }
 

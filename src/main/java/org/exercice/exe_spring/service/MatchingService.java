@@ -19,7 +19,6 @@ public class MatchingService {
     private final CVAnalysisRepository cvAnalysisRepository;
     private final CandidatRepository candidatRepository;
 
-    // ✅ NOUVEAU : Méthode pour analyser et lier à un candidat
     @Transactional
     public String analyzeAndSaveForCandidat(Long candidatId, MultipartFile cvFile) throws Exception {
         Candidat candidat = candidatRepository.findById(candidatId)

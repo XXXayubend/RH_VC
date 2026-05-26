@@ -8,11 +8,6 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class OpenAIDto {
+public class AIDto {
     private Double score;
-    private String analyse;
-    private String recommandation;
-    private String pointsForts;
-    private String pointsFaibles;
-    private String resume;
 }

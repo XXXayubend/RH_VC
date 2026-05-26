@@ -107,55 +107,6 @@ public class CandidatServiceImpl implements CandidatService {
         return fileStorageService.readFile(candidat.getCvPath());
     }
 
-    @Override
-    @Transactional
-    public CandidatDto updateCandidatWithCV(Long id, CandidatDto candidatDto, MultipartFile file) throws IOException {
-        log.debug("Mise à jour du candidat avec id: {}", id);
-
-        Candidat candidat = getCandidatEntityById(id);
-
-        // Mettre à jour les informations
-        candidat.setNom(candidatDto.getNom());
-        candidat.setEmail(candidatDto.getEmail());
-        candidat.setCompetences(candidatDto.getCompetences());
-        candidat.setExperience(candidatDto.getAnneesExperience());
-
-        // Si nouveau CV fourni
-        if (file != null && !file.isEmpty()) {
-            // Supprimer l'ancien CV
-            if (candidat.getCvPath() != null) {
-                fileStorageService.deleteFile(candidat.getCvPath());
-            }
-
-            // Stocker le nouveau CV
-            String filePath = fileStorageService.storeFile(file);
-            candidat.setCvFileName(file.getOriginalFilename());
-            candidat.setCvPath(filePath);
-            candidat.setCvMimeType(file.getContentType());
-        }
-
-        Candidat updatedCandidat = candidatRepository.save(candidat);
-        log.info("Candidat mis à jour avec succès, id: {}", id);
-
-        return CandidatMapper.mapToCandidatDto(updatedCandidat);
-    }
-
-    @Override
-    @Transactional
-    public void deleteCandidat(Long id) {
-        log.debug("Suppression du candidat avec id: {}", id);
-
-        Candidat candidat = getCandidatEntityById(id);
-
-        // Supprimer le fichier CV
-        if (candidat.getCvPath() != null) {
-            fileStorageService.deleteFile(candidat.getCvPath());
-            log.debug("Fichier CV supprimé: {}", candidat.getCvPath());
-        }
-
-        candidatRepository.deleteById(id);
-        log.info("Candidat supprimé avec succès, id: {}", id);
-    }
 
     private Candidat getCandidatEntityById(Long id) {
         return candidatRepository.findById(id)

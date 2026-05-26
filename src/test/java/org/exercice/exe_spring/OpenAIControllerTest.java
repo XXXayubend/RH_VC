@@ -4,10 +4,10 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.transaction.Transactional;
 import org.exercice.exe_spring.dto.CandidatDto;
 import org.exercice.exe_spring.dto.OffreDto;
-import org.exercice.exe_spring.dto.OpenAIDto;
+import org.exercice.exe_spring.dto.AIDto;
 import org.exercice.exe_spring.repository.CandidatRepository;
 import org.exercice.exe_spring.repository.OffreRepository;
-import org.exercice.exe_spring.service.OpenAIService;
+import org.exercice.exe_spring.service.AIService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,7 +40,7 @@ public class OpenAIControllerTest {
     private OffreRepository offreRepository;
 
     @MockBean
-    private OpenAIService openAIService;
+    private AIService openAIService;
 
     private Long testCandidatId;
     private Long testOffreId;
@@ -78,7 +78,7 @@ public class OpenAIControllerTest {
         testOffreId = createdOffre.getId();
 
         // Configuration du mock
-        OpenAIDto mockResponse = new OpenAIDto();
+        AIDto mockResponse = new AIDto();
         mockResponse.setScore(85.0);
         mockResponse.setAnalyse("Très bon matching entre les compétences");
         mockResponse.setRecommandation("RECOMMANDE");
